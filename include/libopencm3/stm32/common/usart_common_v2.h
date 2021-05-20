@@ -455,7 +455,7 @@
 
 /** RTO[23:0]: Receiver timeout value */
 #define USART_RTOR_RTO_SHIFT			0
-#define USART_RTOR_RTO_MASK			(0xFFFFF << USART_RTOR_RTO_SHIFT)
+#define USART_RTOR_RTO_MASK			(0xFFFFFF << USART_RTOR_RTO_SHIFT)
 #define USART_RTOR_RTO_VAL(x)			((x) << USART_RTOR_RTO_SHIFT)
 
 /**@}*/
