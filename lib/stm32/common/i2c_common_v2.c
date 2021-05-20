@@ -457,8 +457,14 @@ void i2c_set_speed(uint32_t i2c, enum i2c_speeds speed, uint32_t clock_megahz)
 {
 	int prescaler;
 	switch(speed) {
-	case i2c_speed_fmp_1m:
-		/* FIXME - add support for this mode! */
+		case i2c_speed_fmp_1m:
+		/* target 16Mhz input, so tpresc = 62.5ns */
+		prescaler = clock_megahz / 16 - 1;
+		i2c_set_prescaler(i2c, prescaler);
+		i2c_set_scl_low_period(i2c, 5-1); // 312.5ns
+		i2c_set_scl_high_period(i2c, 3-1); // 187.5ns
+		i2c_set_data_hold_time(i2c, 0); // 0ns
+		i2c_set_data_setup_time(i2c, 3-1); // 187.5ns
 		break;
 	case i2c_speed_fm_400k:
 		/* target 8Mhz input, so tpresc = 125ns */
@@ -466,7 +472,7 @@ void i2c_set_speed(uint32_t i2c, enum i2c_speeds speed, uint32_t clock_megahz)
 		i2c_set_prescaler(i2c, prescaler);
 		i2c_set_scl_low_period(i2c, 10-1); // 1250ns
 		i2c_set_scl_high_period(i2c, 4-1); // 500ns
-		i2c_set_data_hold_time(i2c, 3); // 375ns
+		i2c_set_data_hold_time(i2c, 1); // 125ns
 		i2c_set_data_setup_time(i2c, 4-1); // 500ns
 		break;
 	default:
